@@ -1,41 +1,45 @@
 <template>
   <div>
     <b-input-group class="mt-3">
-      <b-form-input :disabled="!loaded" v-model="cityName" @input="cleanResults" />
+      <b-form-input
+        @keyup.enter="searchCities"
+        :disabled="loading"
+        v-model="cityName"
+      />
       <b-input-group-append>
         <b-button
           variant="primary"
           @click="searchCities"
-          :disabled="!loaded || cityName === ''"
-        >Search</b-button>
+          :disabled="loading || cityName === ''"
+          >Search</b-button
+        >
       </b-input-group-append>
     </b-input-group>
   </div>
 </template>
-
 <script>
-import { mapState, mapActions, mapMutations } from "vuex";
+import VueTypes from "vue-types";
 export default {
   name: "CitiesSearch",
+  props: {
+    loading: VueTypes.bool.def(false)
+  },
+  watch: {
+    cityName(value) {
+      if (!value) {
+        this.$emit("clean");
+      }
+    }
+  },
   data() {
     return {
       cityName: ""
     };
   },
-  computed: {
-    ...mapState(["loaded"])
-  },
   methods: {
-    ...mapActions(["fetchCities"]),
-    ...mapMutations(["clean"]),
     searchCities() {
       if (this.cityName) {
-        this.fetchCities(this.cityName);
-      }
-    },
-    cleanResults() {
-      if (!this.cityName) {
-        this.clean();
+        this.$emit("fetch-cities", this.cityName);
       }
     }
   }

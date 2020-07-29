@@ -1,21 +1,28 @@
 <template>
   <div class="container">
     <div class="mainInfo">
-      <img :src="item.icon" class="icon" />
+      <img :src="icon" class="icon" />
       <h4>
-        {{ item.name }}
-        <b-badge>{{ item.currentTemperature }}ºC</b-badge>
+        {{ name }}
+        <b-badge>{{ currentTemperature }}ºC</b-badge>
       </h4>
     </div>
     <div class="extraInfo">
-      <p>Min: {{ item.minTemperature }}ºC</p>
-      <p>Max: {{ item.maxTemperature }}ºC</p>
+      <p>Min: {{ minTemperature }}ºC</p>
+      <p>Max: {{ maxTemperature }}ºC</p>
     </div>
   </div>
 </template>
 <script>
+import VueTypes from "vue-types";
 export default {
-  props: ["item"]
+  props: {
+    icon: VueTypes.string,
+    name: VueTypes.string,
+    currentTemperature: VueTypes.number.def(0),
+    minTemperature: VueTypes.number.def(0),
+    maxTemperature: VueTypes.number.def(0)
+  }
 };
 </script>
 <style lang="scss" scoped>

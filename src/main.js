@@ -5,9 +5,7 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 
 import router from "./router";
 import App from "./App";
-import store from "./store";
 import VLink from "./components/VLink";
-import axios from "axios";
 
 Vue.config.productionTip = false;
 
@@ -17,6 +15,5 @@ Vue.component("VLink", VLink);
 
 new Vue({
   router,
-  store,
   render: h => h(App)
 }).$mount("#app");
